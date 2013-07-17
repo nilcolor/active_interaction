@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>ActiveInteraction by orgsync</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>ActiveInteraction</h1>
+        <p>Manage application specific business logic.</p>
+        <p class="view"><a href="https://github.com/orgsync/active_interaction">View the Project on GitHub <small>orgsync/active_interaction</small></a></p>
+        <ul>
+          <li><a href="https://github.com/orgsync/active_interaction/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/orgsync/active_interaction/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/orgsync/active_interaction">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>At first it seemed alright. A little business logic in a controller
+or model wasn't going to hurt anything. Then one day you wake up
+and you're surrounded by fat models and unwieldy controllers. Curled
+up and crying in the corner, you can't help but wonder how it came
+to this.</p>
+
+<p>Take back control. Slim down models and wrangle monstrous controller
+methods with ActiveInteraction.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>This project uses <a href="http://semver.org">semantic versioning</a>.</p>
+
+<p>Add it to your Gemfile:</p>
+
+<div class="highlight"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 0.2.0'</span>
+</pre></div>
+
+<p>And then execute:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>bundle
+</pre></div>
+
+<p>Or install it yourself with:</p>
+
+<div class="highlight"><pre><span class="nv">$ </span>gem install active_interaction
+</pre></div>
+
+<h2>
+<a name="what-do-i-get" class="anchor" href="#what-do-i-get"><span class="octicon octicon-link"></span></a>What do I get?</h2>
+
+<p>ActiveInteraction::Base lets you create interaction models. These
+models ensure that certain options are provided and that those
+options are in the format you want them in. If the options are valid
+it will call <code>execute</code>, store the return value of that method in
+<code>result</code>, and return an instance of your ActiveInteraction::Base
+subclass. Let's looks at a simple example:</p>
+
+<div class="highlight"><pre><span class="c1"># Define an interaction that signs up a user.</span>
+<span class="k">class</span> <span class="nc">UserSignup</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
+  <span class="c1"># required</span>
+  <span class="n">string</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:name</span>
+
+  <span class="c1"># optional</span>
+  <span class="n">boolean</span> <span class="ss">:newsletter_subscribe</span><span class="p">,</span> <span class="n">allow_nil</span><span class="p">:</span> <span class="kp">true</span>
+
+  <span class="c1"># ActiveRecord validations</span>
+  <span class="n">validates</span> <span class="ss">:email</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="no">EMAIL_REGEX</span>
+
+  <span class="c1"># The execute method is called only if the options validate. It</span>
+  <span class="c1"># does your business action. The return value will be stored in</span>
+  <span class="c1"># `result`.</span>
+  <span class="k">def</span> <span class="nf">execute</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span><span class="ss">email</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span> <span class="nb">name</span><span class="p">:</span> <span class="nb">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">newsletter_subscribe</span>
+      <span class="no">NewsletterSubscriptions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">email</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="k">end</span>
+    <span class="no">UserMailer</span><span class="o">.</span><span class="n">async</span><span class="p">(</span><span class="ss">:deliver_welcome</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="n">user</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1"># In a controller action (for instance), you can run it:</span>
+<span class="k">def</span> <span class="nf">new</span>
+  <span class="vi">@signup</span> <span class="o">=</span> <span class="no">UserSignup</span><span class="o">.</span><span class="n">new</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">create</span>
+  <span class="vi">@signup</span> <span class="o">=</span> <span class="no">UserSignup</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:user</span><span class="o">]</span><span class="p">)</span>
+
+  <span class="c1"># Then check to see if it worked:</span>
+  <span class="k">if</span> <span class="vi">@signup</span><span class="o">.</span><span class="n">valid?</span>
+    <span class="n">redirect_to</span> <span class="n">welcome_path</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="n">signup</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="n">render</span> <span class="ss">action</span><span class="p">:</span> <span class="ss">:new</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>You may have noticed that ActiveInteraction::Base quacks like
+ActiveRecord::Base. It can use validations from your Rails application
+and check option validity with <code>valid?</code>. Any errors are added to
+<code>errors</code> which works exactly like an ActiveRecord model. Additionally,
+everything within the <code>execute</code> method is run in a transaction if
+ActiveRecord is available.</p>
+
+<h2>
+<a name="how-do-i-call-an-interaction" class="anchor" href="#how-do-i-call-an-interaction"><span class="octicon octicon-link"></span></a>How do I call an interaction?</h2>
+
+<p>There are two way to call an interaction. Given UserSignup, you can
+do this:</p>
+
+<div class="highlight"><pre><span class="n">outcome</span> <span class="o">=</span> <span class="no">UserSignup</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">outcome</span><span class="o">.</span><span class="n">valid?</span>
+  <span class="c1"># Do something with outcome.result...</span>
+<span class="k">else</span>
+  <span class="c1"># Do something with outcome.errors...</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>Or, you can do this:</p>
+
+<div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="no">UserSignup</span><span class="o">.</span><span class="n">run!</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="c1"># Either returns the result of execute,</span>
+<span class="c1"># or raises ActiveInteraction::InteractionInvalid</span>
+</pre></div>
+
+<h2>
+<a name="what-can-i-pass-to-an-interaction" class="anchor" href="#what-can-i-pass-to-an-interaction"><span class="octicon octicon-link"></span></a>What can I pass to an interaction?</h2>
+
+<p>Interactions only accept a Hash for <code>run</code> and <code>run!</code>.</p>
+
+<div class="highlight"><pre><span class="c1"># A user comments on an article</span>
+<span class="k">class</span> <span class="nc">CreateComment</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
+  <span class="n">model</span> <span class="ss">:article</span><span class="p">,</span> <span class="ss">:user</span>
+  <span class="n">string</span> <span class="ss">:comment</span>
+
+  <span class="n">validates</span> <span class="ss">:comment</span><span class="p">,</span> <span class="ss">length</span><span class="p">:</span> <span class="p">{</span> <span class="ss">maximum</span><span class="p">:</span> <span class="mi">500</span> <span class="p">}</span>
+
+  <span class="k">def</span> <span class="nf">execute</span><span class="p">;</span> <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">somewhere</span>
+  <span class="n">outcome</span> <span class="o">=</span> <span class="no">CreateComment</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+    <span class="ss">comment</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:comment</span><span class="o">]</span><span class="p">,</span>
+    <span class="ss">article</span><span class="p">:</span> <span class="no">Article</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:article_id</span><span class="o">]</span><span class="p">),</span>
+    <span class="ss">user</span><span class="p">:</span> <span class="n">current_user</span>
+  <span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>
+<a name="how-do-i-define-an-interaction" class="anchor" href="#how-do-i-define-an-interaction"><span class="octicon octicon-link"></span></a>How do I define an interaction?</h2>
+
+<ol>
+<li>
+<p>Subclass ActiveInteraction::Base</p>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">YourInteraction</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+</pre></div>
+</li>
+<li>
+<p>Define your attributes:</p>
+
+<div class="highlight"><pre><span class="n">string</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:state</span>
+<span class="n">integer</span> <span class="ss">:age</span>
+<span class="n">boolean</span> <span class="ss">:is_special</span>
+<span class="n">model</span> <span class="ss">:account</span>
+<span class="n">array</span> <span class="ss">:tags</span><span class="p">,</span> <span class="n">allow_nil</span><span class="p">:</span> <span class="kp">true</span> <span class="k">do</span>
+  <span class="n">string</span>
+<span class="k">end</span>
+<span class="nb">hash</span> <span class="ss">:prefs</span><span class="p">,</span> <span class="n">allow_nil</span><span class="p">:</span> <span class="kp">true</span> <span class="k">do</span>
+  <span class="n">boolean</span> <span class="ss">:smoking</span>
+  <span class="n">boolean</span> <span class="ss">:view</span>
+<span class="k">end</span>
+<span class="n">date</span> <span class="ss">:arrives_on</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Date</span><span class="o">.</span><span class="n">today</span>
+<span class="n">date</span> <span class="ss">:departs_on</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Date</span><span class="o">.</span><span class="n">tomorrow</span>
+</pre></div>
+</li>
+<li>
+<p>Use any additional validations you need:</p>
+
+<div class="highlight"><pre><span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">length</span><span class="p">:</span> <span class="p">{</span> <span class="ss">maximum</span><span class="p">:</span> <span class="mi">10</span> <span class="p">}</span>
+<span class="n">validates</span> <span class="ss">:state</span><span class="p">,</span> <span class="ss">inclusion</span><span class="p">:</span> <span class="p">{</span> <span class="k">in</span><span class="p">:</span> <span class="sx">%w(AL AK AR ... WY)</span> <span class="p">}</span>
+<span class="n">validate</span> <span class="n">arrives_before_departs</span>
+
+<span class="kp">private</span>
+
+<span class="k">def</span> <span class="nf">arrive_before_departs</span>
+  <span class="k">if</span> <span class="n">departs_on</span> <span class="o">&lt;=</span> <span class="n">arrives_on</span>
+    <span class="n">errors</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="ss">:departs_on</span><span class="p">,</span> <span class="s1">'must come after the arrival time'</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</li>
+<li>
+<p>Define your execute method. It can return whatever you like:</p>
+
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">execute</span>
+  <span class="n">record</span> <span class="o">=</span> <span class="n">do_thing</span><span class="p">(</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="p">)</span>
+  <span class="c1"># ...</span>
+  <span class="n">record</span>
+<span class="k">end</span>
+</pre></div>
+</li>
+</ol><p>Check out the <a href="http://rubydoc.info/github/orgsync/active_interaction">documentation</a> for a full list of methods.</p>
+
+<h2>
+<a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<p>This project was inspired by the fantastic work done in <a href="https://github.com/cypriss/mutations">Mutations</a>.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/orgsync">orgsync</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
