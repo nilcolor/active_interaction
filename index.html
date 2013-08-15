@@ -55,7 +55,7 @@ methods with ActiveInteraction.</p>
 
 <p>Add it to your Gemfile:</p>
 
-<div class="highlight"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 0.2.0'</span>
+<div class="highlight"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 0.4.0'</span>
 </pre></div>
 
 <p>And then execute:</p>
@@ -206,7 +206,7 @@ do this:</p>
 
 <div class="highlight"><pre><span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">length</span><span class="p">:</span> <span class="p">{</span> <span class="ss">maximum</span><span class="p">:</span> <span class="mi">10</span> <span class="p">}</span>
 <span class="n">validates</span> <span class="ss">:state</span><span class="p">,</span> <span class="ss">inclusion</span><span class="p">:</span> <span class="p">{</span> <span class="k">in</span><span class="p">:</span> <span class="sx">%w(AL AK AR ... WY)</span> <span class="p">}</span>
-<span class="n">validate</span> <span class="n">arrives_before_departs</span>
+<span class="n">validate</span> <span class="ss">:arrives_before_departs</span>
 
 <span class="kp">private</span>
 
@@ -228,6 +228,48 @@ do this:</p>
 </pre></div>
 </li>
 </ol><p>Check out the <a href="http://rubydoc.info/github/orgsync/active_interaction">documentation</a> for a full list of methods.</p>
+
+<h2>
+<a name="how-do-i-translate-an-interaction" class="anchor" href="#how-do-i-translate-an-interaction"><span class="octicon octicon-link"></span></a>How do I translate an interaction?</h2>
+
+<p>ActiveInteraction is i18n-aware out of the box! All you have to do
+is add translations to your project. In Rails, they typically go
+into <code>config/locales</code>. So, for example, let's say that (for whatever
+reason) you want to print out everything backwards. Simply add
+translations for ActiveInteraction to your <code>hsilgne</code> locale:</p>
+
+<div class="highlight"><pre><span class="c1"># config/locales/hsilgne.yml</span>
+<span class="l-Scalar-Plain">hsilgne</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">active_interaction</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">types</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">array</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">yarra</span>
+      <span class="l-Scalar-Plain">boolean</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">naeloob</span>
+      <span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">etad</span>
+      <span class="l-Scalar-Plain">date_time</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">emit etad</span>
+      <span class="l-Scalar-Plain">file</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">elif</span>
+      <span class="l-Scalar-Plain">float</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">taolf</span>
+      <span class="l-Scalar-Plain">hash</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">hsah</span>
+      <span class="l-Scalar-Plain">integer</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">regetni</span>
+      <span class="l-Scalar-Plain">model</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ledom</span>
+      <span class="l-Scalar-Plain">string</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">gnirts</span>
+      <span class="l-Scalar-Plain">time</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">emit</span>
+    <span class="l-Scalar-Plain">errors</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">messages</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">invalid</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">dilavni si</span>
+        <span class="l-Scalar-Plain">invalid_nested</span><span class="p-Indicator">:</span> <span class="s">'%{type}</span><span class="nv"> </span><span class="s">dilav</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">ton</span><span class="nv"> </span><span class="s">si'</span>
+        <span class="l-Scalar-Plain">missing</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">deriuqer si</span>
+</pre></div>
+
+<p>Then set your locale and run an interaction like normal:</p>
+
+<div class="highlight"><pre><span class="no">I18n</span><span class="o">.</span><span class="n">locale</span> <span class="o">=</span> <span class="ss">:hsilgne</span>
+<span class="k">class</span> <span class="nc">Interaction</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
+  <span class="n">boolean</span> <span class="ss">:a</span>
+  <span class="k">def</span> <span class="nf">execute</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+<span class="nb">p</span> <span class="no">Interaction</span><span class="o">.</span><span class="n">run</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">messages</span>
+<span class="c1"># =&gt; {:a=&gt;["deriuqer si"]}</span>
+</pre></div>
 
 <h2>
 <a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
