@@ -4,42 +4,36 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>ActiveInteraction by orgsync</title>
+
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/main.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body>
-
+    <div class="wrapper">
       <header>
         <h1>ActiveInteraction</h1>
         <p>Manage application specific business logic.</p>
+        <p class="view"><a href="https://github.com/orgsync/active_interaction">View the Project on GitHub <small>orgsync/active_interaction</small></a></p>
+        <ul>
+          <li><a href="https://github.com/orgsync/active_interaction/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/orgsync/active_interaction/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/orgsync/active_interaction">View On <strong>GitHub</strong></a></li>
+        </ul>
       </header>
-
-      <div id="banner">
-        <span id="logo"></span>
-
-        <a href="https://github.com/orgsync/active_interaction" class="button fork"><strong>View On GitHub</strong></a>
-        <div class="downloads">
-          <span>Downloads:</span>
-          <ul>
-            <li><a href="https://github.com/orgsync/active_interaction/zipball/master" class="button">ZIP</a></li>
-            <li><a href="https://github.com/orgsync/active_interaction/tarball/master" class="button">TAR</a></li>
-          </ul>
-        </div>
-      </div><!-- end banner -->
-
-    <div class="wrapper">
-      <nav>
-        <ul></ul>
-      </nav>
       <section>
-        <p>At first it seemed alright. A little business logic in a controller
+        <p><a href="https://badge.fury.io/rb/active_interaction" title="Gem Version"><img src="https://badge.fury.io/rb/active_interaction.png" alt="Gem Version"></a>
+<a href="https://travis-ci.org/orgsync/active_interaction" title="Build Status"><img src="https://travis-ci.org/orgsync/active_interaction.png" alt="Build Status"></a>
+<a href="https://coveralls.io/r/orgsync/active_interaction" title="Coverage Status"><img src="https://coveralls.io/repos/orgsync/active_interaction/badge.png" alt="Coverage Status"></a>
+<a href="https://codeclimate.com/github/orgsync/active_interaction" title="Code Climate"><img src="https://codeclimate.com/github/orgsync/active_interaction.png" alt="Code Climate"></a>
+<a href="https://gemnasium.com/orgsync/active_interaction" title="Dependency Status"><img src="https://gemnasium.com/orgsync/active_interaction.png" alt="Dependency Status"></a></p>
+
+<p>At first it seemed alright. A little business logic in a controller
 or model wasn't going to hurt anything. Then one day you wake up
 and you're surrounded by fat models and unwieldy controllers. Curled
 up and crying in the corner, you can't help but wonder how it came
@@ -48,6 +42,8 @@ to this.</p>
 <p>Take back control. Slim down models and wrangle monstrous controller
 methods with ActiveInteraction.</p>
 
+<p>Check out the full <a href="http://rubydoc.info/github/orgsync/active_interaction">documentation</a> on RubyDoc.info.</p>
+
 <h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
@@ -55,17 +51,17 @@ methods with ActiveInteraction.</p>
 
 <p>Add it to your Gemfile:</p>
 
-<div class="highlight"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 0.4.0'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 0.5.0'</span>
 </pre></div>
 
 <p>And then execute:</p>
 
-<div class="highlight"><pre><span class="nv">$ </span>bundle
+<div class="highlight highlight-sh"><pre><span class="nv">$ </span>bundle
 </pre></div>
 
 <p>Or install it yourself with:</p>
 
-<div class="highlight"><pre><span class="nv">$ </span>gem install active_interaction
+<div class="highlight highlight-sh"><pre><span class="nv">$ </span>gem install active_interaction
 </pre></div>
 
 <h2>
@@ -78,7 +74,7 @@ it will call <code>execute</code>, store the return value of that method in
 <code>result</code>, and return an instance of your ActiveInteraction::Base
 subclass. Let's looks at a simple example:</p>
 
-<div class="highlight"><pre><span class="c1"># Define an interaction that signs up a user.</span>
+<div class="highlight highlight-ruby"><pre><span class="c1"># Define an interaction that signs up a user.</span>
 <span class="k">class</span> <span class="nc">UserSignup</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
   <span class="c1"># required</span>
   <span class="n">string</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:name</span>
@@ -132,7 +128,7 @@ ActiveRecord is available.</p>
 <p>There are two way to call an interaction. Given UserSignup, you can
 do this:</p>
 
-<div class="highlight"><pre><span class="n">outcome</span> <span class="o">=</span> <span class="no">UserSignup</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<div class="highlight highlight-ruby"><pre><span class="n">outcome</span> <span class="o">=</span> <span class="no">UserSignup</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">outcome</span><span class="o">.</span><span class="n">valid?</span>
   <span class="c1"># Do something with outcome.result...</span>
 <span class="k">else</span>
@@ -142,7 +138,7 @@ do this:</p>
 
 <p>Or, you can do this:</p>
 
-<div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="no">UserSignup</span><span class="o">.</span><span class="n">run!</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<div class="highlight highlight-ruby"><pre><span class="n">result</span> <span class="o">=</span> <span class="no">UserSignup</span><span class="o">.</span><span class="n">run!</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
 <span class="c1"># Either returns the result of execute,</span>
 <span class="c1"># or raises ActiveInteraction::InteractionInvalid</span>
 </pre></div>
@@ -152,7 +148,7 @@ do this:</p>
 
 <p>Interactions only accept a Hash for <code>run</code> and <code>run!</code>.</p>
 
-<div class="highlight"><pre><span class="c1"># A user comments on an article</span>
+<div class="highlight highlight-ruby"><pre><span class="c1"># A user comments on an article</span>
 <span class="k">class</span> <span class="nc">CreateComment</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
   <span class="n">model</span> <span class="ss">:article</span><span class="p">,</span> <span class="ss">:user</span>
   <span class="n">string</span> <span class="ss">:comment</span>
@@ -178,7 +174,7 @@ do this:</p>
 <li>
 <p>Subclass ActiveInteraction::Base</p>
 
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">YourInteraction</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
+<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">YourInteraction</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
   <span class="c1"># ...</span>
 <span class="k">end</span>
 </pre></div>
@@ -186,7 +182,7 @@ do this:</p>
 <li>
 <p>Define your attributes:</p>
 
-<div class="highlight"><pre><span class="n">string</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:state</span>
+<div class="highlight highlight-ruby"><pre><span class="n">string</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:state</span>
 <span class="n">integer</span> <span class="ss">:age</span>
 <span class="n">boolean</span> <span class="ss">:is_special</span>
 <span class="n">model</span> <span class="ss">:account</span>
@@ -204,7 +200,7 @@ do this:</p>
 <li>
 <p>Use any additional validations you need:</p>
 
-<div class="highlight"><pre><span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">length</span><span class="p">:</span> <span class="p">{</span> <span class="ss">maximum</span><span class="p">:</span> <span class="mi">10</span> <span class="p">}</span>
+<div class="highlight highlight-ruby"><pre><span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">length</span><span class="p">:</span> <span class="p">{</span> <span class="ss">maximum</span><span class="p">:</span> <span class="mi">10</span> <span class="p">}</span>
 <span class="n">validates</span> <span class="ss">:state</span><span class="p">,</span> <span class="ss">inclusion</span><span class="p">:</span> <span class="p">{</span> <span class="k">in</span><span class="p">:</span> <span class="sx">%w(AL AK AR ... WY)</span> <span class="p">}</span>
 <span class="n">validate</span> <span class="ss">:arrives_before_departs</span>
 
@@ -220,7 +216,7 @@ do this:</p>
 <li>
 <p>Define your execute method. It can return whatever you like:</p>
 
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">execute</span>
+<div class="highlight highlight-ruby"><pre><span class="k">def</span> <span class="nf">execute</span>
   <span class="n">record</span> <span class="o">=</span> <span class="n">do_thing</span><span class="p">(</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="p">)</span>
   <span class="c1"># ...</span>
   <span class="n">record</span>
@@ -238,7 +234,7 @@ into <code>config/locales</code>. So, for example, let's say that (for whatever
 reason) you want to print out everything backwards. Simply add
 translations for ActiveInteraction to your <code>hsilgne</code> locale:</p>
 
-<div class="highlight"><pre><span class="c1"># config/locales/hsilgne.yml</span>
+<div class="highlight highlight-yaml"><pre><span class="c1"># config/locales/hsilgne.yml</span>
 <span class="l-Scalar-Plain">hsilgne</span><span class="p-Indicator">:</span>
   <span class="l-Scalar-Plain">active_interaction</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">types</span><span class="p-Indicator">:</span>
@@ -262,7 +258,7 @@ translations for ActiveInteraction to your <code>hsilgne</code> locale:</p>
 
 <p>Then set your locale and run an interaction like normal:</p>
 
-<div class="highlight"><pre><span class="no">I18n</span><span class="o">.</span><span class="n">locale</span> <span class="o">=</span> <span class="ss">:hsilgne</span>
+<div class="highlight highlight-ruby"><pre><span class="no">I18n</span><span class="o">.</span><span class="n">locale</span> <span class="o">=</span> <span class="ss">:hsilgne</span>
 <span class="k">class</span> <span class="nc">Interaction</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
   <span class="n">boolean</span> <span class="ss">:a</span>
   <span class="k">def</span> <span class="nf">execute</span><span class="p">;</span> <span class="k">end</span>
@@ -276,11 +272,11 @@ translations for ActiveInteraction to your <code>hsilgne</code> locale:</p>
 
 <p>This project was inspired by the fantastic work done in <a href="https://github.com/cypriss/mutations">Mutations</a>.</p>
       </section>
-      <footer>
-        <p>Project maintained by <a href="https://github.com/orgsync">orgsync</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
-      </footer>
     </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/orgsync">orgsync</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
