@@ -51,7 +51,7 @@ methods with ActiveInteraction.</p>
 
 <p>Add it to your Gemfile:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 0.5.0'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 0.6.1'</span>
 </pre></div>
 
 <p>And then execute:</p>
@@ -72,7 +72,7 @@ models ensure that certain options are provided and that those
 options are in the format you want them in. If the options are valid
 it will call <code>execute</code>, store the return value of that method in
 <code>result</code>, and return an instance of your ActiveInteraction::Base
-subclass. Let's looks at a simple example:</p>
+subclass. Let's look at a simple example:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="c1"># Define an interaction that signs up a user.</span>
 <span class="k">class</span> <span class="nc">UserSignup</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
@@ -80,7 +80,7 @@ subclass. Let's looks at a simple example:</p>
   <span class="n">string</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:name</span>
 
   <span class="c1"># optional</span>
-  <span class="n">boolean</span> <span class="ss">:newsletter_subscribe</span><span class="p">,</span> <span class="n">allow_nil</span><span class="p">:</span> <span class="kp">true</span>
+  <span class="n">boolean</span> <span class="ss">:newsletter_subscribe</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="kp">nil</span>
 
   <span class="c1"># ActiveRecord validations</span>
   <span class="n">validates</span> <span class="ss">:email</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="no">EMAIL_REGEX</span>
@@ -186,10 +186,10 @@ do this:</p>
 <span class="n">integer</span> <span class="ss">:age</span>
 <span class="n">boolean</span> <span class="ss">:is_special</span>
 <span class="n">model</span> <span class="ss">:account</span>
-<span class="n">array</span> <span class="ss">:tags</span><span class="p">,</span> <span class="n">allow_nil</span><span class="p">:</span> <span class="kp">true</span> <span class="k">do</span>
+<span class="n">array</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="kp">nil</span> <span class="k">do</span>
   <span class="n">string</span>
 <span class="k">end</span>
-<span class="nb">hash</span> <span class="ss">:prefs</span><span class="p">,</span> <span class="n">allow_nil</span><span class="p">:</span> <span class="kp">true</span> <span class="k">do</span>
+<span class="nb">hash</span> <span class="ss">:prefs</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="kp">nil</span> <span class="k">do</span>
   <span class="n">boolean</span> <span class="ss">:smoking</span>
   <span class="n">boolean</span> <span class="ss">:view</span>
 <span class="k">end</span>
