@@ -1,32 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>ActiveInteraction by orgsync</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="ActiveInteraction : Manage application specific business logic." />
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <title>ActiveInteraction</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>ActiveInteraction</h1>
-        <p>Manage application specific business logic.</p>
-        <p class="view"><a href="https://github.com/orgsync/active_interaction">View the Project on GitHub <small>orgsync/active_interaction</small></a></p>
-        <ul>
-          <li><a href="https://github.com/orgsync/active_interaction/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/orgsync/active_interaction/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/orgsync/active_interaction">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/orgsync/active_interaction">View on GitHub</a>
+
+          <h1 id="project_title">ActiveInteraction</h1>
+          <h2 id="project_tagline">Manage application specific business logic.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/orgsync/active_interaction/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/orgsync/active_interaction/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <p><a href="https://badge.fury.io/rb/active_interaction" title="Gem Version"><img src="https://badge.fury.io/rb/active_interaction.png" alt="Gem Version"></a>
 <a href="https://travis-ci.org/orgsync/active_interaction" title="Build Status"><img src="https://travis-ci.org/orgsync/active_interaction.png" alt="Build Status"></a>
 <a href="https://coveralls.io/r/orgsync/active_interaction" title="Coverage Status"><img src="https://coveralls.io/repos/orgsync/active_interaction/badge.png" alt="Coverage Status"></a>
@@ -42,16 +46,16 @@ to this.</p>
 <p>Take back control. Slim down models and wrangle monstrous controller
 methods with ActiveInteraction.</p>
 
-<p>Check out the full <a href="http://rubydoc.info/github/orgsync/active_interaction">documentation</a> on RubyDoc.info.</p>
+<p>Read more on the or check out the full <a href="http://rubydoc.info/github/orgsync/active_interaction">documentation</a> on RubyDoc.info.</p>
 
 <h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
-<p>This project uses <a href="http://semver.org">semantic versioning</a>.</p>
+<p>This project uses <a href="http://semver.org/spec/v2.0.0.html">semantic versioning</a>.</p>
 
 <p>Add it to your Gemfile:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 0.8.0'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 0.9.0'</span>
 </pre></div>
 
 <p>And then execute:</p>
@@ -140,7 +144,7 @@ do this:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">result</span> <span class="o">=</span> <span class="no">UserSignup</span><span class="o">.</span><span class="n">run!</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
 <span class="c1"># Either returns the result of execute,</span>
-<span class="c1"># or raises ActiveInteraction::InteractionInvalid</span>
+<span class="c1"># or raises ActiveInteraction::InvalidInteractionError</span>
 </pre></div>
 
 <h2>
@@ -228,25 +232,34 @@ do this:</p>
 <h2>
 <a name="how-do-i-compose-interactions" class="anchor" href="#how-do-i-compose-interactions"><span class="octicon octicon-link"></span></a>How do I compose interactions?</h2>
 
-<p>You can run many interactions in series by setting up a pipeline. Simply list
-the interactions you want to run with <code>pipe</code>. Transforming the output of an
-interaction into the input of the next one is accomplished with lambdas.</p>
+<p>(Note: this feature is experimental. See <a href="https://github.com/orgsync/active_interaction/issues/41">#41</a> &amp; <a href="https://github.com/orgsync/active_interaction/issues/79">#79</a>.)</p>
 
-<div class="highlight highlight-ruby"><pre><span class="n">pipeline</span> <span class="o">=</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Pipeline</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span>
-  <span class="n">pipe</span> <span class="no">Add</span>
-  <span class="n">pipe</span> <span class="no">Square</span><span class="p">,</span> <span class="ss">:x</span>
-  <span class="n">pipe</span> <span class="no">Add</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="n">result</span> <span class="p">{</span> <span class="p">{</span> <span class="ss">x</span><span class="p">:</span> <span class="n">result</span><span class="p">,</span> <span class="ss">y</span><span class="p">:</span> <span class="n">result</span> <span class="p">}</span> <span class="p">}</span>
+<p>You can run interactions from within other interactions by calling <code>compose</code>.
+If the interaction is successful, it'll return the result (just like if you had
+called it with <code>run!</code>). If something went wrong, execution will halt
+immediately and the errors will be moved onto the caller.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">DoSomeMath</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
+  <span class="n">integer</span> <span class="ss">:x</span><span class="p">,</span> <span class="ss">:y</span>
+  <span class="k">def</span> <span class="nf">execute</span>
+    <span class="n">sum</span> <span class="o">=</span> <span class="n">compose</span><span class="p">(</span><span class="no">Add</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
+    <span class="n">square</span> <span class="o">=</span> <span class="n">compose</span><span class="p">(</span><span class="no">Square</span><span class="p">,</span> <span class="ss">x</span><span class="p">:</span> <span class="n">sum</span><span class="p">)</span>
+    <span class="n">compose</span><span class="p">(</span><span class="no">Add</span><span class="p">,</span> <span class="ss">x</span><span class="p">:</span> <span class="n">square</span><span class="p">,</span> <span class="ss">y</span><span class="p">:</span> <span class="n">square</span><span class="p">)</span>
+  <span class="k">end</span>
 <span class="k">end</span>
-<span class="n">outcome</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="ss">x</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="ss">y</span><span class="p">:</span> <span class="mi">5</span><span class="p">)</span>
-<span class="n">outcome</span><span class="o">.</span><span class="n">result</span>
-<span class="c1"># =&gt; 128 # ((3 + 5) ** 2) * 2</span>
+<span class="no">DoSomeMath</span><span class="o">.</span><span class="n">run!</span><span class="p">(</span><span class="ss">x</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="ss">y</span><span class="p">:</span> <span class="mi">5</span><span class="p">)</span>
+<span class="c1"># 128 =&gt; ((3 + 5) ** 2) * 2</span>
 </pre></div>
 
-<p>The whole pipeline executes in a single transaction. The pipeline returns the
-outcome of the last successful interaction. An error in the pipeline will
-short-circuit and stop execution immediately.</p>
-
-<p>While pipelines are similar to interactions, the two are not substitutable.</p>
+<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">AddThree</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
+  <span class="n">integer</span> <span class="ss">:y</span>
+  <span class="k">def</span> <span class="nf">execute</span>
+    <span class="n">compose</span><span class="p">(</span><span class="no">Add</span><span class="p">,</span> <span class="ss">x</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="ss">y</span><span class="p">:</span> <span class="n">y</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+<span class="no">AddThree</span><span class="o">.</span><span class="n">run!</span><span class="p">(</span><span class="ss">y</span><span class="p">:</span> <span class="kp">nil</span><span class="p">)</span>
+<span class="c1"># =&gt; ActiveInteraction::InvalidInteractionError: Y is required</span>
+</pre></div>
 
 <h2>
 <a name="how-do-i-translate-an-interaction" class="anchor" href="#how-do-i-translate-an-interaction"><span class="octicon octicon-link"></span></a>How do I translate an interaction?</h2>
@@ -296,11 +309,16 @@ translations for ActiveInteraction to your <code>hsilgne</code> locale:</p>
 <p>This project was inspired by the fantastic work done in <a href="https://github.com/cypriss/mutations">Mutations</a>.</p>
       </section>
     </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/orgsync">orgsync</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">ActiveInteraction maintained by <a href="https://github.com/orgsync">orgsync</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
     
+
   </body>
 </html>
