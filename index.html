@@ -46,7 +46,8 @@ to this.</p>
 <p>Take back control. Slim down models and wrangle monstrous controller
 methods with ActiveInteraction.</p>
 
-<p>Read more on the or check out the full <a href="http://rubydoc.info/github/orgsync/active_interaction">documentation</a> on RubyDoc.info.</p>
+<p>Read more on the <a href="http://orgsync.github.io/active_interaction/">project page</a> or check out the full <a href="http://rubydoc.info/github/orgsync/active_interaction">documentation</a>
+on RubyDoc.info.</p>
 
 <h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
@@ -55,7 +56,7 @@ methods with ActiveInteraction.</p>
 
 <p>Add it to your Gemfile:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 0.9.0'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 0.9.1'</span>
 </pre></div>
 
 <p>And then execute:</p>
@@ -72,14 +73,14 @@ methods with ActiveInteraction.</p>
 <a name="what-do-i-get" class="anchor" href="#what-do-i-get"><span class="octicon octicon-link"></span></a>What do I get?</h2>
 
 <p>ActiveInteraction::Base lets you create interaction models. These
-models ensure that certain options are provided and that those
-options are in the format you want them in. If the options are valid
+models ensure that certain inputs are provided and that those
+inputs are in the format you want them in. If the inputs are valid
 it will call <code>execute</code>, store the return value of that method in
 <code>result</code>, and return an instance of your ActiveInteraction::Base
 subclass. Let's look at a simple example:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="c1"># Define an interaction that signs up a user.</span>
-<span class="k">class</span> <span class="nc">UserSignup</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
+<span class="k">class</span> <span class="nc">UserSignup</span> <span class="o">&lt;</span> <span class="no">ActiveInteraction</span><span class="o">::</span><span class="no">Base</span>
   <span class="c1"># required</span>
   <span class="n">string</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:name</span>
 
@@ -89,7 +90,7 @@ subclass. Let's look at a simple example:</p>
   <span class="c1"># ActiveRecord validations</span>
   <span class="n">validates</span> <span class="ss">:email</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="no">EMAIL_REGEX</span>
 
-  <span class="c1"># The execute method is called only if the options validate. It</span>
+  <span class="c1"># The execute method is called only if the inputs validate. It</span>
   <span class="c1"># does your business action. The return value will be stored in</span>
   <span class="c1"># `result`.</span>
   <span class="k">def</span> <span class="nf">execute</span>
@@ -153,7 +154,7 @@ do this:</p>
 <p>Interactions only accept a Hash for <code>run</code> and <code>run!</code>.</p>
 
 <div class="highlight highlight-ruby"><pre><span class="c1"># A user comments on an article</span>
-<span class="k">class</span> <span class="nc">CreateComment</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
+<span class="k">class</span> <span class="nc">CreateComment</span> <span class="o">&lt;</span> <span class="no">ActiveInteraction</span><span class="o">::</span><span class="no">Base</span>
   <span class="n">model</span> <span class="ss">:article</span><span class="p">,</span> <span class="ss">:user</span>
   <span class="n">string</span> <span class="ss">:comment</span>
 
@@ -178,7 +179,7 @@ do this:</p>
 <li>
 <p>Subclass ActiveInteraction::Base</p>
 
-<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">YourInteraction</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
+<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">YourInteraction</span> <span class="o">&lt;</span> <span class="no">ActiveInteraction</span><span class="o">::</span><span class="no">Base</span>
   <span class="c1"># ...</span>
 <span class="k">end</span>
 </pre></div>
@@ -239,7 +240,7 @@ If the interaction is successful, it'll return the result (just like if you had
 called it with <code>run!</code>). If something went wrong, execution will halt
 immediately and the errors will be moved onto the caller.</p>
 
-<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">DoSomeMath</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
+<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">DoSomeMath</span> <span class="o">&lt;</span> <span class="no">ActiveInteraction</span><span class="o">::</span><span class="no">Base</span>
   <span class="n">integer</span> <span class="ss">:x</span><span class="p">,</span> <span class="ss">:y</span>
   <span class="k">def</span> <span class="nf">execute</span>
     <span class="n">sum</span> <span class="o">=</span> <span class="n">compose</span><span class="p">(</span><span class="no">Add</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
@@ -251,7 +252,7 @@ immediately and the errors will be moved onto the caller.</p>
 <span class="c1"># 128 =&gt; ((3 + 5) ** 2) * 2</span>
 </pre></div>
 
-<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">AddThree</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
+<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">AddThree</span> <span class="o">&lt;</span> <span class="no">ActiveInteraction</span><span class="o">::</span><span class="no">Base</span>
   <span class="n">integer</span> <span class="ss">:y</span>
   <span class="k">def</span> <span class="nf">execute</span>
     <span class="n">compose</span><span class="p">(</span><span class="no">Add</span><span class="p">,</span> <span class="ss">x</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="ss">y</span><span class="p">:</span> <span class="n">y</span><span class="p">)</span>
@@ -295,7 +296,7 @@ translations for ActiveInteraction to your <code>hsilgne</code> locale:</p>
 <p>Then set your locale and run an interaction like normal:</p>
 
 <div class="highlight highlight-ruby"><pre><span class="no">I18n</span><span class="o">.</span><span class="n">locale</span> <span class="o">=</span> <span class="ss">:hsilgne</span>
-<span class="k">class</span> <span class="nc">Interaction</span> <span class="o">&lt;</span> <span class="ss">ActiveInteraction</span><span class="p">:</span><span class="ss">:Base</span>
+<span class="k">class</span> <span class="nc">Interaction</span> <span class="o">&lt;</span> <span class="no">ActiveInteraction</span><span class="o">::</span><span class="no">Base</span>
   <span class="n">boolean</span> <span class="ss">:a</span>
   <span class="k">def</span> <span class="nf">execute</span><span class="p">;</span> <span class="k">end</span>
 <span class="k">end</span>
