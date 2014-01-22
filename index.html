@@ -238,26 +238,25 @@ If the interaction is successful, it'll return the result (just like if you had
 called it with <code>run!</code>). If something went wrong, execution will halt
 immediately and the errors will be moved onto the caller.</p>
 
-<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">DoSomeMath</span> <span class="o">&lt;</span> <span class="no">ActiveInteraction</span><span class="o">::</span><span class="no">Base</span>
-  <span class="n">integer</span> <span class="ss">:x</span><span class="p">,</span> <span class="ss">:y</span>
+<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">AddThree</span> <span class="o">&lt;</span> <span class="no">ActiveInteraction</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">integer</span> <span class="ss">:x</span>
   <span class="k">def</span> <span class="nf">execute</span>
-    <span class="n">sum</span> <span class="o">=</span> <span class="n">compose</span><span class="p">(</span><span class="no">Add</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
-    <span class="n">square</span> <span class="o">=</span> <span class="n">compose</span><span class="p">(</span><span class="no">Square</span><span class="p">,</span> <span class="ss">x</span><span class="p">:</span> <span class="n">sum</span><span class="p">)</span>
-    <span class="n">compose</span><span class="p">(</span><span class="no">Add</span><span class="p">,</span> <span class="ss">x</span><span class="p">:</span> <span class="n">square</span><span class="p">,</span> <span class="ss">y</span><span class="p">:</span> <span class="n">square</span><span class="p">)</span>
+    <span class="n">compose</span><span class="p">(</span><span class="no">Add</span><span class="p">,</span> <span class="ss">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="ss">y</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
-<span class="no">DoSomeMath</span><span class="o">.</span><span class="n">run!</span><span class="p">(</span><span class="ss">x</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="ss">y</span><span class="p">:</span> <span class="mi">5</span><span class="p">)</span>
-<span class="c1"># 128 =&gt; ((3 + 5) ** 2) * 2</span>
+<span class="no">AddThree</span><span class="o">.</span><span class="n">run!</span><span class="p">(</span><span class="ss">x</span><span class="p">:</span> <span class="mi">5</span><span class="p">)</span>
+<span class="c1"># =&gt; 8</span>
 </pre></div>
 
-<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">AddThree</span> <span class="o">&lt;</span> <span class="no">ActiveInteraction</span><span class="o">::</span><span class="no">Base</span>
-  <span class="n">integer</span> <span class="ss">:y</span>
+<p>To bring in filters from another interaction, use <code>import_filters</code>. Combined
+with <code>inputs</code>, delegating to another interaction is a piece of cake.</p>
+
+<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">AddAndDouble</span> <span class="o">&lt;</span> <span class="no">ActiveInteraction</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">import_filters</span> <span class="no">Add</span>
   <span class="k">def</span> <span class="nf">execute</span>
-    <span class="n">compose</span><span class="p">(</span><span class="no">Add</span><span class="p">,</span> <span class="ss">x</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="ss">y</span><span class="p">:</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">compose</span><span class="p">(</span><span class="no">Add</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
   <span class="k">end</span>
 <span class="k">end</span>
-<span class="no">AddThree</span><span class="o">.</span><span class="n">run!</span><span class="p">(</span><span class="ss">y</span><span class="p">:</span> <span class="kp">nil</span><span class="p">)</span>
-<span class="c1"># =&gt; ActiveInteraction::InvalidInteractionError: Y is required</span>
 </pre></div>
 
 <h2>
