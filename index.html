@@ -32,8 +32,8 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <p><a href="https://badge.fury.io/rb/active_interaction" title="Gem Version"><img src="https://badge.fury.io/rb/active_interaction.png" alt="Gem Version"></a>
-<a href="https://travis-ci.org/orgsync/active_interaction" title="Build Status"><img src="https://travis-ci.org/orgsync/active_interaction.png" alt="Build Status"></a>
-<a href="https://coveralls.io/r/orgsync/active_interaction" title="Coverage Status"><img src="https://coveralls.io/repos/orgsync/active_interaction/badge.png" alt="Coverage Status"></a>
+<a href="https://travis-ci.org/orgsync/active_interaction" title="Build Status"><img src="https://travis-ci.org/orgsync/active_interaction.png?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/r/orgsync/active_interaction?branch=master" title="Coverage Status"><img src="https://coveralls.io/repos/orgsync/active_interaction/badge.png?branch=master" alt="Coverage Status"></a>
 <a href="https://codeclimate.com/github/orgsync/active_interaction" title="Code Climate"><img src="https://codeclimate.com/github/orgsync/active_interaction.png" alt="Code Climate"></a>
 <a href="https://gemnasium.com/orgsync/active_interaction" title="Dependency Status"><img src="https://gemnasium.com/orgsync/active_interaction.png" alt="Dependency Status"></a></p>
 
@@ -56,7 +56,7 @@ on RubyDoc.info.</p>
 
 <p>Add it to your Gemfile:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 1.0'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 1.1'</span>
 </pre></div>
 
 <p>And then execute:</p>
@@ -198,8 +198,8 @@ do this:</p>
   <span class="n">boolean</span> <span class="ss">:smoking</span>
   <span class="n">boolean</span> <span class="ss">:view</span>
 <span class="k">end</span>
-<span class="n">date</span> <span class="ss">:arrives_on</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Date</span><span class="o">.</span><span class="n">today</span>
-<span class="n">date</span> <span class="ss">:departs_on</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Date</span><span class="o">.</span><span class="n">tomorrow</span>
+<span class="n">date</span> <span class="ss">:arrives_on</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="no">Date</span><span class="o">.</span><span class="n">today</span> <span class="p">}</span>
+<span class="n">date</span> <span class="ss">:departs_on</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="no">Date</span><span class="o">.</span><span class="n">tomorrow</span> <span class="p">}</span>
 </pre></div>
 </li>
 <li>
@@ -286,7 +286,7 @@ translations for ActiveInteraction to your <code>hsilgne</code> locale:</p>
     <span class="l-Scalar-Plain">errors</span><span class="p-Indicator">:</span>
       <span class="l-Scalar-Plain">messages</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">invalid</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">dilavni si</span>
-        <span class="l-Scalar-Plain">invalid_nested</span><span class="p-Indicator">:</span> <span class="s">'%{type}</span><span class="nv"> </span><span class="s">dilav</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">ton</span><span class="nv"> </span><span class="s">si'</span>
+        <span class="l-Scalar-Plain">invalid_type</span><span class="p-Indicator">:</span> <span class="s">'%{type}</span><span class="nv"> </span><span class="s">dilav</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">ton</span><span class="nv"> </span><span class="s">si'</span>
         <span class="l-Scalar-Plain">missing</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">deriuqer si</span>
 </pre></div>
 
