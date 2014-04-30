@@ -31,11 +31,11 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p><a href="https://badge.fury.io/rb/active_interaction" title="Gem Version"><img src="https://badge.fury.io/rb/active_interaction.png" alt="Gem Version"></a>
-<a href="https://travis-ci.org/orgsync/active_interaction" title="Build Status"><img src="https://travis-ci.org/orgsync/active_interaction.png?branch=master" alt="Build Status"></a>
+        <p><a href="https://badge.fury.io/rb/active_interaction" title="Gem Version"><img src="https://badge.fury.io/rb/active_interaction.svg" alt="Gem Version"></a>
+<a href="https://travis-ci.org/orgsync/active_interaction" title="Build Status"><img src="https://travis-ci.org/orgsync/active_interaction.svg?branch=master" alt="Build Status"></a>
 <a href="https://coveralls.io/r/orgsync/active_interaction?branch=master" title="Coverage Status"><img src="https://coveralls.io/repos/orgsync/active_interaction/badge.png?branch=master" alt="Coverage Status"></a>
 <a href="https://codeclimate.com/github/orgsync/active_interaction" title="Code Climate"><img src="https://codeclimate.com/github/orgsync/active_interaction.png" alt="Code Climate"></a>
-<a href="https://gemnasium.com/orgsync/active_interaction" title="Dependency Status"><img src="https://gemnasium.com/orgsync/active_interaction.png" alt="Dependency Status"></a></p>
+<a href="https://gemnasium.com/orgsync/active_interaction" title="Dependency Status"><img src="https://gemnasium.com/orgsync/active_interaction.svg" alt="Dependency Status"></a></p>
 
 <p>At first it seemed alright. A little business logic in a controller
 or model wasn't going to hurt anything. Then one day you wake up
@@ -56,7 +56,7 @@ on RubyDoc.info.</p>
 
 <p>Add it to your Gemfile:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 1.1'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'active_interaction'</span><span class="p">,</span> <span class="s1">'~&gt; 1.2'</span>
 </pre></div>
 
 <p>And then execute:</p>
@@ -123,7 +123,7 @@ subclass. Let's look at a simple example:</p>
 <p>You may have noticed that ActiveInteraction::Base quacks like
 ActiveRecord::Base. It can use validations from your Rails application
 and check option validity with <code>valid?</code>. Any errors are added to
-<code>errors</code> which works exactly like an ActiveRecord model. Additionally,
+<code>errors</code> which works exactly like an ActiveRecord model. By default,
 everything within the <code>execute</code> method is run in a transaction if
 ActiveRecord is available.</p>
 
@@ -276,6 +276,7 @@ translations for ActiveInteraction to your <code>hsilgne</code> locale:</p>
       <span class="l-Scalar-Plain">boolean</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">naeloob</span>
       <span class="l-Scalar-Plain">date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">etad</span>
       <span class="l-Scalar-Plain">date_time</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">emit etad</span>
+      <span class="l-Scalar-Plain">decimal</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">lamiced</span>
       <span class="l-Scalar-Plain">file</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">elif</span>
       <span class="l-Scalar-Plain">float</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">taolf</span>
       <span class="l-Scalar-Plain">hash</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">hsah</span>
