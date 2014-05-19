@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require 'active_support/concern'
+
 module ActiveInteraction
   # Allow `hash` to be overridden when given arguments and/or a block.
   #

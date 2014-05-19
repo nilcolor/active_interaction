@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require 'active_support/concern'
+
 module ActiveInteraction
   # Handle common `method_missing` functionality.
   #

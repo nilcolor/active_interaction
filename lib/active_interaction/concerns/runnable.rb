@@ -1,5 +1,9 @@
 # coding: utf-8
 
+require 'active_interaction/concerns/transactable'
+require 'active_model'
+require 'active_support/concern'
+
 module ActiveInteraction
   # @abstract Include and override {#execute} to implement a custom Runnable
   #   class.

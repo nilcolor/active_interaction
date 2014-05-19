@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require 'active_interaction/filters/abstract_numeric_filter'
+
 module ActiveInteraction
   class Base
     # @!method self.decimal(*attributes, options = {})

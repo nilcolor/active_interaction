@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require 'active_interaction/filters/abstract_filter'
+
 module ActiveInteraction
   # @abstract
   #

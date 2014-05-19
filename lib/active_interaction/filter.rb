@@ -1,7 +1,5 @@
 # coding: utf-8
 
-require 'active_support/inflector'
-
 module ActiveInteraction
   # @!macro [new] filter_method_params
   #   @param *attributes [Array<Symbol>] Attributes to create.

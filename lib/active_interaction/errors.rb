@@ -1,5 +1,8 @@
 # coding: utf-8
 
+require 'active_model/errors'
+require 'active_support/core_ext/hash/indifferent_access'
+
 #
 module ActiveInteraction
   # Top-level error class. All other errors subclass this.

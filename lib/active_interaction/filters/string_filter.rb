@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require 'active_interaction/filter'
+
 module ActiveInteraction
   class Base
     # @!method self.string(*attributes, options = {})

@@ -1,5 +1,8 @@
 # coding: utf-8
 
+require 'active_interaction/concerns/missable'
+require 'active_interaction/filter'
+
 module ActiveInteraction
   class Base
     # @!method self.array(*attributes, options = {}, &block)

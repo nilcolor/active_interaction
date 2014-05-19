@@ -1,6 +1,9 @@
 # coding: utf-8
 
-require 'active_support/core_ext/hash/indifferent_access'
+require 'active_interaction/concerns/active_modelable'
+require 'active_interaction/concerns/hashable'
+require 'active_interaction/concerns/missable'
+require 'active_interaction/concerns/runnable'
 
 module ActiveInteraction
   # @abstract Subclass and override {#execute} to implement a custom

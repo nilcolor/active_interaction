@@ -1,10 +1,12 @@
 # coding: utf-8
 
+require 'active_support/concern'
+
 begin
   require 'active_record'
 rescue LoadError
   module ActiveRecord # rubocop:disable Documentation
-    Rollback = Class.new(ActiveInteraction::Error)
+    Rollback = Class.new(StandardError)
 
     class Base # rubocop:disable Documentation
       def self.transaction(*)
