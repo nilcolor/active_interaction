@@ -1,6 +1,7 @@
 # coding: utf-8
 
 require 'active_interaction/filters/abstract_numeric_filter'
+require 'bigdecimal'
 
 module ActiveInteraction
   class Base
