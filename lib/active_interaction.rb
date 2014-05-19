@@ -1,25 +1,17 @@
 # coding: utf-8
 
-require 'active_model'
-
-require 'active_interaction/version'
-require 'active_interaction/errors'
-
+require 'active_interaction/backports'
+require 'active_interaction/base'
 require 'active_interaction/concerns/active_modelable'
 require 'active_interaction/concerns/hashable'
 require 'active_interaction/concerns/missable'
-require 'active_interaction/concerns/transactable'
 require 'active_interaction/concerns/runnable'
-
-require 'active_interaction/grouped_input'
-
-require 'active_interaction/modules/input_processor'
-require 'active_interaction/modules/validation'
-
-require 'active_interaction/filter_column'
+require 'active_interaction/concerns/transactable'
+require 'active_interaction/errors'
 require 'active_interaction/filter'
-require 'active_interaction/filters/abstract_filter'
+require 'active_interaction/filter_column'
 require 'active_interaction/filters/abstract_date_time_filter'
+require 'active_interaction/filters/abstract_filter'
 require 'active_interaction/filters/abstract_numeric_filter'
 require 'active_interaction/filters/array_filter'
 require 'active_interaction/filters/boolean_filter'
@@ -34,10 +26,10 @@ require 'active_interaction/filters/model_filter'
 require 'active_interaction/filters/string_filter'
 require 'active_interaction/filters/symbol_filter'
 require 'active_interaction/filters/time_filter'
-
-require 'active_interaction/base'
-
-require 'active_interaction/backports'
+require 'active_interaction/grouped_input'
+require 'active_interaction/modules/input_processor'
+require 'active_interaction/modules/validation'
+require 'active_interaction/version'
 
 I18n.load_path += Dir[File.expand_path(
   File.join(%w[active_interaction locale *.yml]), File.dirname(__FILE__))]
