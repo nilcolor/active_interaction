@@ -1,5 +1,6 @@
 # coding: utf-8
 
+require 'active_interaction/errors'
 require 'active_interaction/grouped_input'
 require 'active_support/core_ext/hash/keys'
 require 'ostruct'
